@@ -79,8 +79,7 @@ stages:
 
            
           - script: |
-              helm upgrade --install my-app-dev "$(System.DefaultWorkingDirectory)\$(helmChartPath)" --namespace dev --create-namespace -f "$(System.DefaultWorkingDirectory)\$(helmChartPath)\values.dev.yaml"                 
-              --set image.tag=$(Build.BuildId)
+              helm upgrade --install my-app-dev "$(System.DefaultWorkingDirectory)\$(helmChartPath)" --namespace dev --create-namespace -f "$(System.DefaultWorkingDirectory)\$(helmChartPath)\values.dev.yaml" --set image.tag=$(Build.BuildId)
             displayName: Deploy to Minikube (Dev)
 
 # ==========================
