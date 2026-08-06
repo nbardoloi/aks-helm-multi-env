@@ -56,7 +56,7 @@ stages:
 # ==========================
 - stage: DeployToDev
   displayName: Deploy to Dev
-  dependsOn: Build
+  dependsOn: 
 
   jobs:
   - deployment: DeployJob
