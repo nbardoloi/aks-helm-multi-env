@@ -5,7 +5,7 @@ pool:
   name: 'Default'    # Your self-hosted agent pool
 
 variables:
-  imageRepository: 'my-app'
+  imageRepository: 'nbardoloi/demodocker'
   dockerRegistryServiceConnection: 'dockerhub-connection'
   helmChartPath: 'helm/my-app'
 
