@@ -4,7 +4,7 @@
 replicaCount: 1
 
 image:
-  repository: nbardoloi/demodocker/my-app # Your default image repository
+  repository: nbardoloi/demodocker # Your default image repository
   #repository: myacrdemo123.azurecr.io/my-app # Your default image repository
   pullPolicy: IfNotPresent
   tag: "1.0.0" # A default tag that will be overridden by the pipeline
