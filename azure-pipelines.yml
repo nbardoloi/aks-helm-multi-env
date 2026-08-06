@@ -102,16 +102,10 @@ stages:
           - task: HelmInstaller@1
             displayName: Install Helm
             inputs:
-              helmVersionToInstall: '3.11.0'
+              helmVersionToInstall: '4.1.4'
 
           - script: |
               kubectl config current-context
               kubectl get nodes
-
-              helm upgrade --install my-app-qa \
-                $(System.DefaultWorkingDirectory)/$(helmChartPath) \
-                --namespace qa \
-                --create-namespace \
-                -f $(System.DefaultWorkingDirectory)/$(helmChartPath)/values.qa.yaml \
-                --set image.tag=$(Build.BuildId)
+              helm upgrade --install my-app-qa "$(System.DefaultWorkingDirectory)\$(helmChartPath)" --namespace qa --create-namespace -f "$(System.DefaultWorkingDirectory)\$(helmChartPath)\values.qa.yaml" --set image.tag=$(Build.BuildId)
             displayName: Deploy to Minikube (QA)
