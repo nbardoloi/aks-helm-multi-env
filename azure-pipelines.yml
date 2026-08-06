@@ -56,7 +56,7 @@ stages:
 # ==========================
 - stage: DeployToDev
   displayName: Deploy to Dev
-  dependsOn: 
+  dependsOn: []
 
   jobs:
   - deployment: DeployJob
@@ -87,13 +87,17 @@ stages:
               kubectl config current-context
               kubectl get nodes
 
-              helm upgrade --install my-app-dev \
-                $(System.DefaultWorkingDirectory)/$(helmChartPath) \
-                --namespace dev \
-                --create-namespace \
-                -f $(System.DefaultWorkingDirectory)/$(helmChartPath)/values.dev.yaml \
+              #helm upgrade --install my-app-dev \
+              #  $(System.DefaultWorkingDirectory)/$(helmChartPath) \
+              #  --namespace dev \
+              #  --create-namespace \
+              #  -f $(System.DefaultWorkingDirectory)/$(helmChartPath)/values.dev.yaml \
                 #--set image.tag=$(Build.BuildId)
-                --set image.tag=${{ parameters.imageTag }}
+              #  --set image.tag=${{ parameters.imageTag }}
+            #displayName: Deploy to Minikube (Dev)
+
+          - script: |
+              helm upgrade --install my-app-dev "$(System.DefaultWorkingDirectory)\$(helmChartPath)" --namespace dev --create-namespace -f "$(System.DefaultWorkingDirectory)\$(helmChartPath)\values.dev.yaml" --set image.tag=${{ parameters.imageTag }}
             displayName: Deploy to Minikube (Dev)
 
 # ==========================
