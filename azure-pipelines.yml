@@ -87,7 +87,7 @@ stages:
 # ==========================
 - stage: DeployToQA
   displayName: Deploy to QA
-  dependsOn: DeployToDev
+  dependsOn: Build
 
   jobs:
   - deployment: DeployQAJob
