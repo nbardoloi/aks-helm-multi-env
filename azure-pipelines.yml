@@ -68,6 +68,19 @@ stages:
 
           - checkout: self
 
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                echo USERNAME=%USERNAME%
+                echo USERPROFILE=%USERPROFILE%
+                whoami
+                
+                kubectl config view
+                kubectl config current-context
+                kubectl get nodes
+                displayName: Debug Kubernetes
+
           - task: HelmInstaller@1
             displayName: Install Helm
             inputs:
