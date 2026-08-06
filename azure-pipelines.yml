@@ -4,15 +4,6 @@ trigger:
 pool:
   name: 'Default'    # Your self-hosted agent pool
 
-parameters:
-- name: buildImage
-  type: boolean
-  default: true
-
-- name: imageTag
-  type: string
-  default: latest
-
 variables:
   imageRepository: 'nbardoloi/demodocker'
   dockerRegistryServiceConnection: 'dockerhub-connection'
@@ -25,8 +16,7 @@ stages:
 # ==========================
 - stage: Build
   displayName: Build and Push Docker Image
-  condition: eq('${{ parameters.buildImage }}', true)
-
+  
   jobs:
   - job: BuildJob
     displayName: Build Container
@@ -56,7 +46,7 @@ stages:
 # ==========================
 - stage: DeployToDev
   displayName: Deploy to Dev
-  dependsOn: []
+  dependsOn: Build
 
   jobs:
   - deployment: DeployJob
@@ -89,7 +79,8 @@ stages:
 
            
           - script: |
-              helm upgrade --install my-app-dev "$(System.DefaultWorkingDirectory)\$(helmChartPath)" --namespace dev --create-namespace -f "$(System.DefaultWorkingDirectory)\$(helmChartPath)\values.dev.yaml" --set image.tag=${{ parameters.imageTag }}
+              helm upgrade --install my-app-dev "$(System.DefaultWorkingDirectory)\$(helmChartPath)" --namespace dev --create-namespace -f "$(System.DefaultWorkingDirectory)\$(helmChartPath)\values.dev.yaml"                 
+              --set image.tag=$(Build.BuildId)
             displayName: Deploy to Minikube (Dev)
 
 # ==========================
